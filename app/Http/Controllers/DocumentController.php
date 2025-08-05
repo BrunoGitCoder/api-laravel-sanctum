@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Document;
+use App\Models\Project;
+use App\Models\User;
 use App\Services\ApiResponse;
 use App\Services\DocumentService;
 use Illuminate\Http\Request;
@@ -21,8 +23,7 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        $data = $this->documentService->index();
-        return ApiResponse::success($data);
+
     }
 
     /**
@@ -30,7 +31,7 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

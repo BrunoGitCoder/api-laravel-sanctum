@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
+use App\Models\UserProject;
 use App\Services\ApiResponse;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return ApiResponse::success(Project::all());
+        return ApiResponse::success(Project::where('user_id', auth()->id())->get());
     }
 
     /**
@@ -23,6 +24,7 @@ class ProjectController extends Controller
     public function store(ProjectRequest $request)
     {
         $project = Project::create($request->all());
+        $project->users()->attach(auth()->id());
 
         return ApiResponse::success($project);
     }

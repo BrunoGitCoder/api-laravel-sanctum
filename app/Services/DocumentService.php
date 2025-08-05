@@ -8,6 +8,6 @@ class DocumentService
 {
     public function index()
     {
-        return Document::where('project_id', auth()->id())->get();
+        return Document::find(auth()->id())->user;
     }
 }

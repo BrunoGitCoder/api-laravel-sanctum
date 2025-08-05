@@ -10,7 +10,7 @@ class Project extends Model
     /** @use HasFactory<\Database\Factories\ProjectFactory> */
     use HasFactory;
 
-    protected $fillable = ['document_id', 'title', 'description'];
+    protected $fillable = ['user_id', 'title', 'description'];
 
     // project 1:1 document
     public function document()
