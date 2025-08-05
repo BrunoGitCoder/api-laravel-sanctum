@@ -27,7 +27,13 @@ class AuthController extends Controller
         return ApiResponse::success([
             'user' => $user->name,
             'email' => $user->email,
-            'token'=> $token
+            'token' => $token
         ]);
+    }
+
+    public function logout(AuthRequest $request)
+    {
+        $request->user()->tokens()->delete();
+        return ApiResponse::success([], 'Logout realizado com sucesso.');
     }
 }
