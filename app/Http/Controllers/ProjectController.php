@@ -15,7 +15,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return ApiResponse::success(Project::all());
+        $user = auth()->user();
+        $projects = $user->projects()->with('tasks')->with('document')->get();
+         return ApiResponse::success($projects);
     }
 
     /**

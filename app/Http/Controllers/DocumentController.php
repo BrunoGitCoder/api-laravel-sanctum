@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\DocumentRequest;
 use App\Models\Document;
 use App\Models\Project;
 use App\Models\User;
@@ -23,15 +24,27 @@ class DocumentController extends Controller
      */
     public function index()
     {
-        
+        $document = $this->documentService->index();
+
+        if ($document) {
+            return ApiResponse::success($document);
+        } else {
+            return ApiResponse::error('Nenhum documento encontrado.', 404);
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(DocumentRequest $request)
     {
-        
+        $document = $this->documentService->store($request);
+
+        if ($document) {
+            return ApiResponse::success($document);
+        } else {
+            return ApiResponse::error("Projeto não pertence ao usuario autenticado", 403);
+        }
     }
 
     /**

@@ -11,7 +11,6 @@ class TaskService
     public function index()
     {
         $user = auth()->user();
-
         $projectIds = $user->projects()->pluck('projects.id');
 
         return Task::with('project')->whereIn('project_id', $projectIds)->get();
@@ -27,7 +26,6 @@ class TaskService
         } else {
             return false;
         }
-
     }
 
     public function isMember(TaskRequest $request)
