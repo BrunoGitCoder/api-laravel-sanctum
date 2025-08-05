@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthRequest;
+use App\Services\ApiResponse;
 
 class AuthController extends Controller
 {
@@ -10,24 +11,23 @@ class AuthController extends Controller
     {
         $email = $request->input('email');
         $password = $request->input('password');
+
         $attempt = auth()->attempt([
             'email' => $email,
             'password' => $password
         ]);
 
         if (!$attempt) {
-            return response()->json([
-                'error' => true,
-                'message' => 'Credencial inválida.'
-            ], 401);
+            return ApiResponse::unauthorized();
         }
 
         $user = auth()->user();
         $token = $user->createToken($user->name)->plainTextToken;
 
-        return response()->json([
-            'message' => 'Login efetuado com sucesso.',
-            'token' => $token
-        ], 200);
+        return ApiResponse::success([
+            'user' => $user->name,
+            'email' => $user->email,
+            'token'=> $token
+        ]);
     }
 }

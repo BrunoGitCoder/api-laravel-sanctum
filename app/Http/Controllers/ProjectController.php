@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProjectRequest;
 use App\Models\Project;
+use App\Services\ApiResponse;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -13,9 +14,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return response()->json([
-            'data' => Project::all()
-        ], 200);
+        return ApiResponse::success(Project::all());
     }
 
     /**
@@ -25,10 +24,7 @@ class ProjectController extends Controller
     {
         $project = Project::create($request->all());
 
-        return response()->json([
-            'message' => 'Projeto criado com sucesso.',
-            'data' => $project
-        ], 200);
+        return ApiResponse::success($project);
     }
 
     /**
@@ -39,14 +35,9 @@ class ProjectController extends Controller
         $project = Project::find($id);
 
         if ($project) {
-            return response()->json([
-                'data' => $project
-            ], 200);
+            return ApiResponse::success($project);
         } else {
-            return response()->json([
-                'error' => true,
-                'message' => 'Projeto não encontrado.'
-            ], 404);
+            return ApiResponse::error('Projeto não encontrado', 404);
         }
     }
 
@@ -59,15 +50,9 @@ class ProjectController extends Controller
 
         if ($project) {
             $project->update($request->all());
-            return response()->json([
-                'message' => 'Projeto editado com sucesso.',
-                'data' => $project
-            ], 200);
+            return ApiResponse::success($project);
         } else {
-            return response()->json([
-                'error' => true,
-                'message' => 'Projeto não encontrado.'
-            ], 404);
+            return ApiResponse::error('Projeto não encontrado', 404);
         }
     }
 
@@ -80,15 +65,9 @@ class ProjectController extends Controller
 
         if ($project) {
             $project->delete();
-            return response()->json([
-                'message' => 'Projeto deletado com sucesso.',
-                'data' => $project
-            ], 200);
+            return ApiResponse::success($project, 'Projeto deletado');
         } else {
-            return response()->json([
-                'error' => true,
-                'message' => 'Projeto não encontrado.'
-            ], 404);
+            return ApiResponse::error('Projeto não encontrado', 404);
         }
     }
 }
