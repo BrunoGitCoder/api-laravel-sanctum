@@ -15,7 +15,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        return ApiResponse::success(Project::where('user_id', auth()->id())->get());
+        return ApiResponse::success(Project::all());
     }
 
     /**
