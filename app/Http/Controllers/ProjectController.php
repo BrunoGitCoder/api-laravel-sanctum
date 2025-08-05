@@ -16,7 +16,7 @@ class ProjectController extends Controller
     public function index()
     {
         $user = auth()->user();
-        $projects = $user->projects()->with('tasks')->with('document')->get();
+        $projects = $user->projects()->with(['tasks', 'document'])->get();
         return ApiResponse::success($projects);
         // return Project::whereRelation('users', 'user_id', $user->id)->get();
 
@@ -38,7 +38,8 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        $project = Project::find($id);
+        $project = Project::where('id', $id)->with('tasks', 'document')->first();
+        // $project = Project::find($id);
 
         if ($project) {
             return ApiResponse::success($project);
