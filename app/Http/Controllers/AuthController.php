@@ -20,7 +20,6 @@ class AuthController extends Controller
         if (!$attempt) {
             return ApiResponse::unauthorized();
         }
-
         $user = auth()->user();
         $token = $user->createToken($user->name)->plainTextToken;
 
