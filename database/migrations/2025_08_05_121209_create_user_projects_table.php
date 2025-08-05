@@ -15,7 +15,7 @@ return new class extends Migration
          * projects n:n users
          * users n:n projects
          */
-        Schema::create('user_projects', function (Blueprint $table) {
+        Schema::create('project_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_projects');
+        Schema::dropIfExists('project_user');
     }
 };

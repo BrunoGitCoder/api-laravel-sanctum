@@ -22,7 +22,7 @@ class DocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_id' => ['required'],
+            'project_id' => ['required', 'unique:documents,project_id'],
             'file' => ['required', 'string']
         ];
     }
@@ -31,6 +31,7 @@ class DocumentRequest extends FormRequest
     {
         return [
             'project_id.required' => 'Campo Project_id obrigatório.',
+            'project_id.unique' => 'O Projeto já tem um documento anexado.',
 
             'file.required' => 'Campo file obrigatório.',
             'file.string' => 'Tipo de dado inválido.'

@@ -10,10 +10,13 @@ class TaskService
 {
     public function index()
     {
-        $user = auth()->user();
-        $projectIds = $user->projects()->pluck('projects.id');
+        // $user = auth()->user();
+        // $projectIds = $user->projects()->pluck('projects.id');
 
-        return Task::with('project')->whereIn('project_id', $projectIds)->get();
+        $projects = auth()->user()->projects;
+
+        return Task::whereBelongsTo($projects)->with('project')->get();
+        // return Task::with('project')->whereIn('project_id', $projectIds)->get();
     }
 
     public function store(TaskRequest $request)

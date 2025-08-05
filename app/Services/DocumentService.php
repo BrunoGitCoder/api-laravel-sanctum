@@ -13,11 +13,11 @@ class DocumentService
     {
         $user = auth()->user();
         $projectIds = $user->projects()->pluck('projects.id');
-
-        if ($projectIds->isEmpty()) {
+        $document = Document::with('project')->whereIn('project_id', $projectIds)->get();
+        if ($projectIds->isEmpty() || $document->isEmpty()) {
             return false;
         } else {
-            return Document::with('project')->whereIn('project_id', $projectIds)->get();
+            return $document;
         }
 
     }

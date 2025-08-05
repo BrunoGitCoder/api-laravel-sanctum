@@ -17,7 +17,9 @@ class ProjectController extends Controller
     {
         $user = auth()->user();
         $projects = $user->projects()->with('tasks')->with('document')->get();
-         return ApiResponse::success($projects);
+        return ApiResponse::success($projects);
+        // return Project::whereRelation('users', 'user_id', $user->id)->get();
+
     }
 
     /**
